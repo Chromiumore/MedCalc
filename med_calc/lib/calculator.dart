@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 class CalculatorScreen extends StatelessWidget {
   const CalculatorScreen({super.key});
+
+  static final List<TextInputFormatter> inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))];
   
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,7 @@ class CalculatorScreen extends StatelessWidget {
 
             TextField(
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')), 
-              ],
+              inputFormatters: inputFormatters,
               decoration: InputDecoration(
                 labelText: 'Креатинин, мкмоль/л',
                 border: OutlineInputBorder(),
@@ -32,9 +32,7 @@ class CalculatorScreen extends StatelessWidget {
 
             TextField(
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')), 
-              ],
+              inputFormatters: inputFormatters,
               decoration: InputDecoration(
                 labelText: 'Билирубин, мкмоль/л',
                 border: OutlineInputBorder(),
@@ -43,9 +41,7 @@ class CalculatorScreen extends StatelessWidget {
 
             TextField(
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')), 
-              ],
+              inputFormatters: inputFormatters,
               decoration: InputDecoration(
                 labelText: 'МНО',
                 border: OutlineInputBorder(),
@@ -54,9 +50,7 @@ class CalculatorScreen extends StatelessWidget {
 
             TextField(
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')), 
-              ],
+              inputFormatters: inputFormatters,
               decoration: InputDecoration(
                 labelText: 'Натрий, ммоль/л',
                 border: OutlineInputBorder(),
