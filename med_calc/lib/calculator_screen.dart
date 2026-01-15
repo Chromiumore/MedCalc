@@ -24,6 +24,11 @@ class CalculatorScreen extends StatelessWidget {
             CalculatorTextField(label: 'МНО'),
             CalculatorTextField(label: 'Натрий, ммоль/л'),
 
+            ElevatedButton(
+              onPressed: () => (),
+              child: const Text('Рассчитать')
+            ),
+
             IntrinsicHeight(
               child: Padding(
                 padding: const EdgeInsets.only(top: 40),
