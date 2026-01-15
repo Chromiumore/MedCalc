@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:med_calc/calculator.dart';
 import 'package:med_calc/calculator_text_field.dart';
 
-class CalculatorScreen extends StatelessWidget {
+class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
-  
+
+  @override
+  State<CalculatorScreen> createState() => _CalculatorScreenState();
+}
+
+class _CalculatorScreenState extends State<CalculatorScreen> {
+  late final Calculator _calculator;
+  int? score;
+
+  @override
+  void initState() {
+    super.initState();
+    _calculator = Calculator();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,20 +34,38 @@ class CalculatorScreen extends StatelessWidget {
               onChanged: (bool? newValue) => ()
             ),
 
-            CalculatorTextField(label: 'Креатинин, мкмоль/л'),
-            CalculatorTextField(label: 'Билирубин, мкмоль/л'),
-            CalculatorTextField(label: 'МНО'),
-            CalculatorTextField(label: 'Натрий, ммоль/л'),
+            CalculatorTextField(
+              label: 'Креатинин, мкмоль/л',
+              calculator: _calculator,
+              onSubmitted: (value) => _calculator.creatinine = value,
+            ),
+            CalculatorTextField(
+              label: 'Билирубин, мкмоль/л',
+              calculator: _calculator,
+              onSubmitted: (value) => _calculator.bilirubin = value,
+            ),
+            CalculatorTextField(
+              label: 'МНО',
+              calculator: _calculator,
+              onSubmitted: (value) => _calculator.inr = value,
+            ),
+            CalculatorTextField(
+              label: 'Натрий, ммоль/л',
+              calculator: _calculator,
+              onSubmitted: (value) => _calculator.natrium = value,
+            ),
 
             ElevatedButton(
-              onPressed: () => (),
+              onPressed: () => setState(() {
+                score = _calculator.calculateMELD();
+              }),
               child: const Text('Рассчитать')
             ),
 
             IntrinsicHeight(
               child: Padding(
                 padding: const EdgeInsets.only(top: 40),
-                child: Row(
+                child: score == null ? null : Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(
@@ -40,7 +73,7 @@ class CalculatorScreen extends StatelessWidget {
                         padding: EdgeInsets.only(top: 30, bottom: 30),
                         color: Colors.blue,
                         alignment: Alignment.center,
-                        child: Text('15\nбаллов', textAlign: TextAlign.center,)
+                        child: Text('${score.toString()}\nбаллов', textAlign: TextAlign.center,)
                       ),
                     ),
                     Expanded(
@@ -60,5 +93,4 @@ class CalculatorScreen extends StatelessWidget {
       ),
     );
   }
-  
 }
