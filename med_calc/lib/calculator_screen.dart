@@ -23,6 +23,33 @@ class CalculatorScreen extends StatelessWidget {
             CalculatorTextField(label: 'Билирубин, мкмоль/л'),
             CalculatorTextField(label: 'МНО'),
             CalculatorTextField(label: 'Натрий, ммоль/л'),
+
+            IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.only(top: 30, bottom: 30),
+                        color: Colors.blue,
+                        alignment: Alignment.center,
+                        child: Text('15\nбаллов', textAlign: TextAlign.center,)
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.only(top: 30, bottom: 30),
+                        color: Colors.lightBlueAccent,
+                        alignment: Alignment.center,
+                        child: Text('6%\n3-х месячная летальность', textAlign: TextAlign.center,)
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
