@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:med_calc/calculator.dart';
 
 class CalculatorTextField extends StatelessWidget{
-  CalculatorTextField({super.key, required this.label, this.controller, required Calculator calculator, this.onSubmitted});
+  CalculatorTextField({super.key, required this.label, this.controller, required Calculator calculator, this.onChanged});
   
   static List<TextInputFormatter> inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))];
   String label;
   final TextEditingController? controller;
-  Function(double value)? onSubmitted;
+  Function(double value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: (value) => onSubmitted != null ? onSubmitted!(double.parse(value)) : () {},
+      onChanged: (value) => onChanged != null ? onChanged!(double.parse(value)) : () {},
       controller: controller,
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       inputFormatters: inputFormatters,
