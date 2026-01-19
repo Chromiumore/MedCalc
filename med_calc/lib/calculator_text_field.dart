@@ -6,7 +6,7 @@ class CalculatorTextField extends StatefulWidget{
   
   final String label;
   static final List<TextInputFormatter> inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))];
-  final Function(double value)? onChanged;
+  final Function(double? value)? onChanged;
   final double min;
   final double max;
 
@@ -25,7 +25,7 @@ class _CalculatorTextFieldState extends State<CalculatorTextField> {
       return "Значения кроме чисел с плавающей точкой не допустимы";
     }
     double parsedValue = double.parse(value);
-    if (parsedValue <= widget.min || parsedValue >= widget.max) {
+    if (parsedValue < widget.min || parsedValue > widget.max) {
       return "Допустимы только значения в диапазоне ${widget.min}-${widget.max}";
     }
 
@@ -35,14 +35,18 @@ class _CalculatorTextFieldState extends State<CalculatorTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onChanged: (value) => widget.onChanged != null ? widget.onChanged!(double.parse(value)) : () {},
+      onChanged: (value) => widget.onChanged != null ? widget.onChanged!(double.tryParse(value)) : () {},
       controller: controller,
       validator: _validator,
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       inputFormatters: CalculatorTextField.inputFormatters,
       decoration: InputDecoration(
         labelText: widget.label,
+        labelStyle: TextStyle(fontWeight: FontWeight.bold),
         border: OutlineInputBorder(),
+        hintText: '${widget.min}-${widget.max}',
+        hintStyle: TextStyle(fontWeight: FontWeight.w300),
+        errorMaxLines: 3,
       ),
     );
   }
