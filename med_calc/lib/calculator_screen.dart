@@ -36,22 +36,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
             CalculatorTextField(
               label: 'Креатинин, мкмоль/л',
-              calculator: _calculator,
               onChanged: (value) => _calculator.creatinine = value,
             ),
             CalculatorTextField(
               label: 'Билирубин, мкмоль/л',
-              calculator: _calculator,
               onChanged: (value) => _calculator.bilirubin = value,
             ),
             CalculatorTextField(
               label: 'МНО',
-              calculator: _calculator,
               onChanged: (value) => _calculator.inr = value,
             ),
             CalculatorTextField(
               label: 'Натрий, ммоль/л',
-              calculator: _calculator,
               onChanged: (value) => _calculator.natrium = value,
             ),
 

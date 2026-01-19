@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:med_calc/calculator.dart';
 
-class CalculatorTextField extends StatelessWidget{
-  CalculatorTextField({super.key, required this.label, this.controller, required Calculator calculator, this.onChanged});
+class CalculatorTextField extends StatefulWidget{
+  const CalculatorTextField({super.key, required this.label, this.onChanged});
   
-  static List<TextInputFormatter> inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))];
-  String label;
-  final TextEditingController? controller;
-  Function(double value)? onChanged;
+  final String label;
+  static final List<TextInputFormatter> inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))];
+  final Function(double value)? onChanged;
+
+  @override
+  State<CalculatorTextField> createState() => _CalculatorTextFieldState();
+}
+
+class _CalculatorTextFieldState extends State<CalculatorTextField> {
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onChanged: (value) => onChanged != null ? onChanged!(double.parse(value)) : () {},
+      onChanged: (value) => widget.onChanged != null ? widget.onChanged!(double.parse(value)) : () {},
       controller: controller,
       keyboardType: TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: inputFormatters,
+      inputFormatters: CalculatorTextField.inputFormatters,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: widget.label,
         border: OutlineInputBorder(),
       ),
     );
