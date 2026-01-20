@@ -58,7 +58,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               ),
               CalculatorTextField(
                 label: 'Натрий, ммоль/л',
-                onChanged: (value) => _calculator.natrium = value,
+                onChanged: (value) => _calculator.sodium = value,
               ),
           
               ElevatedButton(
