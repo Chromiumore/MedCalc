@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:med_calc/data/database_helper.dart';
 import 'package:med_calc/domain/calculator.dart';
 import 'package:med_calc/presentation/calculator_text_field.dart';
 
@@ -11,6 +12,7 @@ class CalculatorScreen extends StatefulWidget {
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
   final Calculator _calculator = Calculator();
+  final DatabaseHelper _db = DatabaseHelper();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   int? score;
@@ -19,6 +21,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   @override
   void initState() {
     super.initState();
+    _db.open();
   }
 
   @override
@@ -66,6 +69,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   if (_formKey.currentState!.validate()) {
                     setState(() {
                       score = _calculator.calculateMELD();
+                      _db.addToHistory(
+                        creatinine: _calculator.creatinine,
+                        bilirubin: _calculator.bilirubin,
+                        inr: _calculator.inr,
+                        sodium: _calculator.sodium,
+                        dialysisLastWeek: isDialysisChecked
+                      );
                     });
                   }
                 },
@@ -103,5 +113,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _db.close();
+    super.dispose();
   }
 }
