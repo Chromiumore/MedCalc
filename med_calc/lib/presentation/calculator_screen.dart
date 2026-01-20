@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:med_calc/calculator.dart';
-import 'package:med_calc/calculator_text_field.dart';
+import 'package:med_calc/domain/calculator.dart';
+import 'package:med_calc/presentation/calculator_text_field.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});

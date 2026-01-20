@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:med_calc/calculator_screen.dart';
-import 'package:med_calc/scaffold_with_navbar.dart';
-import 'package:med_calc/staticstics_screen.dart';
+import 'package:med_calc/presentation/calculator_screen.dart';
+import 'package:med_calc/presentation/scaffold_with_navbar.dart';
+import 'package:med_calc/presentation/staticstics_screen.dart';
 
 final router = GoRouter(
   initialLocation: '/calculator',
