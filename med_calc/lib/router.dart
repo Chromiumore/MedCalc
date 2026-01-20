@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:med_calc/calculator_screen.dart';
 import 'package:med_calc/scaffold_with_navbar.dart';
