@@ -17,12 +17,24 @@ class Calculator {
     double bilirubin,
     double inr,
   ) {
-    return (0.957 * log(creatinine / _creatineConversionFactor) + 0.378 * log(bilirubin / _bilirubinConversionFactor) + 1.12 * log(inr) + 0.643) * 10;
+    double creatinineMgDl = creatinine / _creatineConversionFactor;
+    creatinineMgDl = creatinineMgDl.clamp(1.0, 4.0);
+    double bilirubinMgDl = bilirubin / _bilirubinConversionFactor;
+    bilirubinMgDl = bilirubinMgDl < 1.0 ? 1.0 : bilirubinMgDl;
+    double inrValue = inr < 1.0 ? 1.0 : inr;
+    return (0.957 * log(creatinineMgDl) + 0.378 * log(bilirubinMgDl) + 1.12 * log(inrValue) + 0.643) * 10;
   }
 
   int calculateMELD() {
-    double originalMELD = _calculateOriginalMELD(creatinine!, (dialysisLastWeek) ? 353.6 : bilirubin!, inr!);
-    double meld = originalMELD + 1.32 * (137 - natrium!) - 0.033 * originalMELD * (137 - natrium!);
+    double originalMELD = _calculateOriginalMELD((dialysisLastWeek) ? 353.6 : creatinine!, bilirubin!, inr!);
+    double meld;
+    double natriumValue = natrium!.clamp(125.0, 137.0); 
+
+    if (originalMELD <= 11) {
+      meld = originalMELD - natriumValue - (0.025 * originalMELD * (140 - natriumValue)) + 140;
+    } else {
+      meld = originalMELD + 1.32 * (137 - natriumValue) - 0.033 * originalMELD * (137 - natriumValue);
+    }
     return meld.round();
   }
 

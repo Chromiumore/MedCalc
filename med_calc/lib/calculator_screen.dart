@@ -40,26 +40,18 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               CalculatorTextField(
                 label: 'Креатинин, мкмоль/л',
                 onChanged: (value) => _calculator.creatinine = value,
-                min: 62,
-                max: 115,
               ),
               CalculatorTextField(
                 label: 'Билирубин, мкмоль/л',
                 onChanged: (value) => _calculator.bilirubin = value,
-                min: 5.13,
-                max: 32.49,
               ),
               CalculatorTextField(
                 label: 'МНО',
                 onChanged: (value) => _calculator.inr = value,
-                min: 0.8,
-                max: 1.2,
               ),
               CalculatorTextField(
                 label: 'Натрий, ммоль/л',
                 onChanged: (value) => _calculator.natrium = value,
-                min: 136,
-                max: 145,
               ),
           
               ElevatedButton(
