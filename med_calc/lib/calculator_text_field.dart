@@ -1,12 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CalculatorTextField extends StatefulWidget{
-  const CalculatorTextField({super.key, required this.label, this.onChanged});
+  const CalculatorTextField({super.key, required this.label, this.onChanged, this.enabled = true});
   
   final String label;
   static final List<TextInputFormatter> inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))];
   final Function(double? value)? onChanged;
+  final bool enabled;
 
   @override
   State<CalculatorTextField> createState() => _CalculatorTextFieldState();
@@ -16,6 +18,9 @@ class _CalculatorTextFieldState extends State<CalculatorTextField> {
   TextEditingController controller = TextEditingController();
 
   String? _validator(String? value) {
+    if (!widget.enabled) {
+      return null;
+    }
     if (value == null || value.isEmpty) {
       return "Это поле не может быть пустым";
     }
@@ -40,6 +45,7 @@ class _CalculatorTextFieldState extends State<CalculatorTextField> {
         border: OutlineInputBorder(),
         errorMaxLines: 3,
       ),
+      enabled: widget.enabled,
     );
   }
 }

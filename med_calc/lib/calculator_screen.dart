@@ -10,14 +10,15 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class _CalculatorScreenState extends State<CalculatorScreen> {
-  late final Calculator _calculator;
-  late final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final Calculator _calculator = Calculator();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   int? score;
+  bool isDialysisChecked = false;
 
   @override
   void initState() {
     super.initState();
-    _calculator = Calculator();
   }
 
   @override
@@ -33,13 +34,19 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             children: [
               CheckboxListTile(
                 title: const Text('Диализ не менее двух раз за последние 7 дней'),
-                value: true,
-                onChanged: (bool? newValue) => ()
+                value: isDialysisChecked,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    isDialysisChecked = !isDialysisChecked;
+                    _calculator.dialysisLastWeek = isDialysisChecked;
+                  });
+                  }
               ),
           
               CalculatorTextField(
                 label: 'Креатинин, мкмоль/л',
                 onChanged: (value) => _calculator.creatinine = value,
+                enabled: !isDialysisChecked,
               ),
               CalculatorTextField(
                 label: 'Билирубин, мкмоль/л',
