@@ -29,7 +29,7 @@ class DatabaseHelper {
       final result = await _db!.rawQuery('SELECT * FROM history ORDER BY id DESC');
       print('Reading from db: ${result.length}');
       if (result.isNotEmpty) {
-        print('First calculation: $result[0]');
+        print('First calculation: ${result[0]}');
       }
       return result;
     } catch (e) {

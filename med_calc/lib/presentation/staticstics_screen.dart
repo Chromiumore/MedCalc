@@ -34,24 +34,37 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
     return Scaffold(
       body: Column(
         children: [
-          FutureBuilder(
-            future: _history,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasData) {
-                return Center(
-                  child: Column(
-                    children: [
-                      Text('Страница статистики'),
-                      Text(snapshot.data!.length.toString())
-                    ],
-                  ),
-                );
-              } else {
-                return Center(child: Text('Нет данных'),);
+          Expanded(
+            child: FutureBuilder(
+              future: _history,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasData) {
+                  List<CalculationData> history = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: history.length,
+                    itemBuilder: (context, index) {
+                      CalculationData calculationData = history[index]; 
+                      return Row(
+                        spacing: 5,
+                        children: [
+                          Text(calculationData.creatinine.toString()),
+                          Text(calculationData.bilirubin.toString()),
+                          Text(calculationData.inr.toString()),
+                          Text(calculationData.dialysisLastWeek.toString()),
+                          Text(calculationData.createdAt)
+                        ],
+                      );
+                    }
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Ошибка: ${snapshot.error}'));
+                } else {
+                  return Center(child: Text('Нет данных'),);
+                }
               }
-            }
+            ),
           ),
           ElevatedButton(
               onPressed: () => (setState(() {
