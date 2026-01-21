@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:med_calc/data/calculation_data.dart';
 import 'package:med_calc/data/database_helper.dart';
 
@@ -47,6 +48,9 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: DataTable(
+                        headingTextStyle: TextStyle(fontWeight: FontWeight.bold),
+                        headingRowColor: WidgetStatePropertyAll(Colors.lightBlueAccent),
+                        dataTextStyle: TextStyle(fontSize: 20),
                         columns: const [
                           DataColumn(label: Text('Креатинин, мкмоль/л')),
                           DataColumn(label: Text('Билирубин, мкмоль/л')),
@@ -57,12 +61,12 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
                         ],
                         rows: history.map((calc) => DataRow(
                           cells: [
-                            DataCell(Text(calc.creatinine.toString())),
+                            DataCell(Text(calc.dialysisLastWeek ? '${353.6} (auto)' : calc.creatinine.toString())),
                             DataCell(Text(calc.bilirubin.toString())),
                             DataCell(Text(calc.inr.toString())),
                             DataCell(Text(calc.sodium.toString())),
-                            DataCell(Text(calc.dialysisLastWeek.toString())),
-                            DataCell(Text(calc.createdAt.toString())),
+                            DataCell(calc.dialysisLastWeek ? Icon(Icons.check, color: Colors.green,) : Icon(Icons.close, color: Colors.red,)),
+                            DataCell(Text(DateFormat('yyyy-MM-dd | HH:mm').format(calc.createdAt))),
                           ]
                         )).toList(),
                       ),
