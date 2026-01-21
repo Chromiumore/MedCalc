@@ -39,6 +39,18 @@ class Calculator {
   }
 
   static double mortalityFromScore(int score) {
-    return 19.6;
+    if (score < 9) {
+      return 0.019;
+    }
+    if (score < 20) {
+      return 0.06;
+    }
+    if (score < 30) {
+      return 0.196;
+    }
+    if (score < 40) {
+      return 0.526;
+    }
+    return 0.713;
   }
 }

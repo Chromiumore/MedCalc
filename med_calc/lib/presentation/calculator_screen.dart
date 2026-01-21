@@ -91,7 +91,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           padding: EdgeInsets.only(top: 30, bottom: 30),
                           color: Colors.lightBlueAccent,
                           alignment: Alignment.center,
-                          child: Text('6%\n3-х месячная летальность', textAlign: TextAlign.center,)
+                          child: Text('${Calculator.mortalityFromScore(score!) * 100}%\n3-х месячная летальность', textAlign: TextAlign.center,)
                         ),
                       ),
                     ],
