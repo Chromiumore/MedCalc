@@ -11,15 +11,15 @@ class DatabaseHelper {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        return await db.execute('CREATE TABLE history (id INTEGER PRIMARY KEY, creatinine REAL, bilirubin REAL, inr REAL, sodium REAL, dialysis INT, createdAt TEXT) STRICT');
+        return await db.execute('CREATE TABLE history (id INTEGER PRIMARY KEY, creatinine REAL, bilirubin REAL, inr REAL, sodium REAL, dialysis INT, createdAt TEXT, score INT, mortality REAL) STRICT');
       }
     );
   }
 
-  void addToHistory({double? creatinine, double? bilirubin, double? inr, double? sodium, bool dialysisLastWeek = false}) async {
+  void addToHistory({double? creatinine, double? bilirubin, double? inr, double? sodium, bool dialysisLastWeek = false, required int score, required double mortality}) async {
     await _db!.transaction((txn) async {
-      await txn.rawInsert("INSERT INTO history (creatinine, bilirubin, inr, sodium, dialysis, createdAt) VALUES (?, ?, ?, ?, ?, ?);",
-      [creatinine, bilirubin, inr, sodium, dialysisLastWeek ? 1 : 0, DateTime.now().toString()]
+      await txn.rawInsert("INSERT INTO history (creatinine, bilirubin, inr, sodium, dialysis, createdAt, score, mortality) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+      [creatinine, bilirubin, inr, sodium, dialysisLastWeek ? 1 : 0, DateTime.now().toString(), score, mortality]
       );
     });
   }
@@ -36,6 +36,10 @@ class DatabaseHelper {
         print('Database error while reading: $e');
         rethrow;
     }
+  }
+
+  void deleteHistory() async {
+    await _db!.delete('history');
   }
 
   void close() async {

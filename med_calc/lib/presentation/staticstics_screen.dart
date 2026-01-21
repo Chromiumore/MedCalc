@@ -51,6 +51,7 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
                         headingTextStyle: TextStyle(fontWeight: FontWeight.bold),
                         headingRowColor: WidgetStatePropertyAll(Colors.lightBlueAccent),
                         dataTextStyle: TextStyle(fontSize: 20),
+                        dataRowMaxHeight: 80,
                         columns: const [
                           DataColumn(label: Text('Креатинин, мкмоль/л')),
                           DataColumn(label: Text('Билирубин, мкмоль/л')),
@@ -58,6 +59,7 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
                           DataColumn(label: Text('Натрий, ммоль/л')),
                           DataColumn(label: Text('Диализ не менее двух раз за последние 7 дней')),
                           DataColumn(label: Text('Дата и время')),
+                          DataColumn(label: Text('Результат'))
                         ],
                         rows: history.map((calc) => DataRow(
                           cells: [
@@ -67,6 +69,7 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
                             DataCell(Text(calc.sodium.toString())),
                             DataCell(calc.dialysisLastWeek ? Icon(Icons.check, color: Colors.green,) : Icon(Icons.close, color: Colors.red,)),
                             DataCell(Text(DateFormat('yyyy-MM-dd | HH:mm').format(calc.createdAt))),
+                            DataCell(Text('${calc.score} баллов\n${calc.mortality * 100}% летальность'))
                           ]
                         )).toList(),
                       ),
@@ -86,6 +89,15 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
               }
             )),
             child: Text('Обновить')
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _db.deleteHistory();
+              setState(() {
+                _history = getHistory();
+              });
+            },
+            child: Text('Удалить')
           )
         ],
       ),

@@ -74,7 +74,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         bilirubin: _calculator.bilirubin,
                         inr: _calculator.inr,
                         sodium: _calculator.sodium,
-                        dialysisLastWeek: isDialysisChecked
+                        dialysisLastWeek: isDialysisChecked,
+                        score: score!,
+                        mortality: Calculator.mortalityFromScore(score!)
                       );
                     });
                   }
