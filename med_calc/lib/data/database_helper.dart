@@ -18,9 +18,9 @@ class DatabaseHelper {
 
   void addToHistory({double? creatinine, double? bilirubin, double? inr, double? sodium, bool dialysisLastWeek = false}) async {
     await _db!.transaction((txn) async {
-      print(await txn.rawInsert("INSERT INTO history (creatinine, bilirubin, inr, sodium, dialysis, createdAt) VALUES (?, ?, ?, ?, ?, ?);",
+      await txn.rawInsert("INSERT INTO history (creatinine, bilirubin, inr, sodium, dialysis, createdAt) VALUES (?, ?, ?, ?, ?, ?);",
       [creatinine, bilirubin, inr, sodium, dialysisLastWeek ? 1 : 0, DateTime.now().toString()]
-      ));
+      );
     });
   }
 

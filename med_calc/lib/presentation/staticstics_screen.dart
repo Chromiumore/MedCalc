@@ -42,21 +42,31 @@ class _StaticsticsScreenState extends State<StaticsticsScreen> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasData) {
                   List<CalculationData> history = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: history.length,
-                    itemBuilder: (context, index) {
-                      CalculationData calculationData = history[index]; 
-                      return Row(
-                        spacing: 5,
-                        children: [
-                          Text(calculationData.creatinine.toString()),
-                          Text(calculationData.bilirubin.toString()),
-                          Text(calculationData.inr.toString()),
-                          Text(calculationData.dialysisLastWeek.toString()),
-                          Text(calculationData.createdAt)
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: DataTable(
+                        columns: const [
+                          DataColumn(label: Text('Креатинин, мкмоль/л')),
+                          DataColumn(label: Text('Билирубин, мкмоль/л')),
+                          DataColumn(label: Text('МНО')),
+                          DataColumn(label: Text('Натрий, ммоль/л')),
+                          DataColumn(label: Text('Диализ не менее двух раз за последние 7 дней')),
+                          DataColumn(label: Text('Дата и время')),
                         ],
-                      );
-                    }
+                        rows: history.map((calc) => DataRow(
+                          cells: [
+                            DataCell(Text(calc.creatinine.toString())),
+                            DataCell(Text(calc.bilirubin.toString())),
+                            DataCell(Text(calc.inr.toString())),
+                            DataCell(Text(calc.sodium.toString())),
+                            DataCell(Text(calc.dialysisLastWeek.toString())),
+                            DataCell(Text(calc.createdAt.toString())),
+                          ]
+                        )).toList(),
+                      ),
+                    ),
                   );
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Ошибка: ${snapshot.error}'));
